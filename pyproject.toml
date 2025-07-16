@@ -1,7 +1,57 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "facets-knowledge-panels"
+version = "0.1.0"
+description = "Providing knowledge panels for a particular Open Food Facts facet (category, brand, etc...)"
+authors = [{ name = "Open Food Facts" }]
+license-files = ["LICENSE"]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "aiohttp==3.9.4",
+    "async-lru==2.0.4",
+    "asyncer==0.0.1",
+    "fastapi==0.109.1",
+    "jinja2==3.1.4",
+    "fastapi-utils==0.2.1",
+    "inflect==7.0.0",
+    "pycountry==22.3.5",
+    "pyyaml==6.0.1",
+    "uvicorn[standard]==0.23.2",
+    "wikidata==0.7.0",
+    "openfoodfacts==0.1.5",
+    "prometheus-fastapi-instrumentator==6.1.0",
+    "flake8==6.1.0",
+    "pyflakes==3.1.0",
+    "beautifulsoup4==4.12.2",
+    "httpx==0.24.1",
+]
+
+[project.optional-dependencies]
+metrics = ["prometheus-fastapi-instrumentator==6.1.0"]
+dev = [
+    "black==25.1.0",
+    "pytest==7.4.0",
+    "pytest-mock==3.11.1",
+    "pytest-asyncio==0.21.1",
+    "flake8==6.1.0",
+    "pyflakes==3.1.0",
+    "isort==5.12.0",
+    "beautifulsoup4==4.12.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["app"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [tool.black]
 include = '\.pyi?$'
 line-length = 100
-
 exclude = '''
 /(
     \.git
@@ -16,10 +66,13 @@ exclude = '''
 )/
 '''
 
-[tool.isort] # From https://black.readthedocs.io/en/stable/compatible_configs.html#isort
+[tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
 line_length = 100
+
+[dependency-groups]
+dev = ["httpx>=0.24.1", "pytest>=7.4.0"]
